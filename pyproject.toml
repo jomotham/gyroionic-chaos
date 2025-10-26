@@ -1,0 +1,11 @@
+[project]
+name = "gyroionic-chaos"
+version = "0.1.0"
+description = "Theoretical mechanics computational project"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "manim>=0.19.0",
+    "matplotlib>=3.10.7",
+    "numpy>=2.3.3",
+]
