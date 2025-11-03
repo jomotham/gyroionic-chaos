@@ -20,6 +20,8 @@ def sys(t, coords: tuple[NDArray]) -> tuple[NDArray, NDArray, NDArray]:
 
 sol = solve_ivp(sys, (0,50), y0=(0,0,0,1,1,2), dense_output = True, atol=1e-12, rtol = 1e-10)
 
+print(sol.y.shape)
+
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
 ax.set_aspect('equal')
