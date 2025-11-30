@@ -3,10 +3,13 @@ from numpy.typing import NDArray
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 from manim import *
+from manim.utils.file_ops import open_file as open_media_file
 
 """bools"""
-boolPhasePlots = 1
-boolManim = 0
+boolMotionPlot = 0
+boolPhasePlots = 0
+boolPoincarePlots = 0
+boolManim = 1
 
 q1 = 1
 q2 = -1
@@ -39,7 +42,7 @@ def sys(t, coords: tuple[NDArray]):
         x2ddot, y2ddot, z2ddot,
     )   
 
-t_max = 100 * 1.5
+t_max = 100
 
 """
 x1, y1, z1
@@ -48,13 +51,13 @@ x2, y2, z2
 x2dot, y2dot, z2dot
 """
 initial_condition = (
-    0,0,1,
-    1,0,0,
+    0.1,0,-0.5,
     0,0,0,
+    -0.1,0,0.5,
     0,0,0
 )
 
-if not boolPhasePlots:
+if boolMotionPlot:
 
     sol = solve_ivp(sys, (0,t_max), y0=initial_condition, dense_output=True, atol=A_TOL, rtol = R_TOL)
 
@@ -62,7 +65,7 @@ if not boolPhasePlots:
     ax = fig.add_subplot(projection='3d')
     ax.set_box_aspect(aspect=(1,1,5))
 
-    print(sol.y.shape)
+    print("sol.y shape =", str(sol.y.shape))
 
     ax.plot(sol.y[0], sol.y[1], zs=sol.y[2], c='blue',alpha=0.5)
     ax.plot(sol.y[6], sol.y[7], zs=sol.y[8], c='red',alpha=0.5)
@@ -73,13 +76,15 @@ if not boolPhasePlots:
 
     plt.show()
 
-else:
+if boolPhasePlots:
+
     t_eval = np.arange(0,t_max, 4 * np.pi)
 
     sol = solve_ivp(sys, (0,t_max), y0=initial_condition, t_eval=t_eval, atol=A_TOL, rtol = R_TOL)
     
-    fig, ax = plt.subplots(nrows=2, ncols=3, sharex=False, sharey=False)
+    print("sol.y shape =", str(sol.y.shape))
 
+    fig, ax = plt.subplots(nrows=2, ncols=3, sharex=False, sharey=False)
 
     ax[0,0].plot(sol.y[0],sol.y[3])
     ax[0,0].set_xlabel(r"$x_1$")
@@ -107,16 +112,22 @@ else:
 
     plt.show()
 
+if boolPoincarePlots:
+
+    pass
+
+
 class DoubleParticle(ThreeDScene):
 
     def construct(self):
 
+        cameraZoomFactor = 1        ## zooms the camera in and out
+        timeScaleFactor = 1/5       ## the smaller the number, the quicker the video time plays for
+        resolution = 25             ## the larger the number, the less resolute it is. don't go below 1, I don't know what happens when you do, but it prob breaks
+
         # phi, theta, focal_distance, gamma, zoom = self.camera.get_value_trackers()
         self.set_camera_orientation(phi=60*DEGREES, theta=30*DEGREES)
-
-        videoScaleFactor = 1
-        timeScaleFactor = 1/10
-        resolution = 25
+        self.camera.set_zoom(cameraZoomFactor)
 
         sol = solve_ivp(sys, (0,t_max), y0=initial_condition, dense_output=True, atol=A_TOL, rtol = R_TOL)
 
@@ -125,7 +136,8 @@ class DoubleParticle(ThreeDScene):
 
         ax = ThreeDAxes()
 
-        print(len(t)//resolution)
+        print("sol.y shape =", str(sol.y.shape))
+        print("Number of Frames: " + str(len(t)//resolution))
     
         particle1 = Sphere(radius=DEFAULT_DOT_RADIUS, resolution=(2,2)).move_to(ax.c2p(x1[0], y1[0], z1[0])).set_color(PURE_GREEN)
         particle1trail = TracedPath(particle1.get_center, dissipating_time=None, stroke_color=GREEN_C, stroke_opacity=[1, 1])
@@ -140,3 +152,10 @@ class DoubleParticle(ThreeDScene):
                 self.camera._frame_center.animate.move_to(VGroup(particle1, particle2))
             ), run_time = (t[i+1]-t[i])*timeScaleFactor*resolution, rate_func=linear)
         self.wait(1)
+
+if boolManim:
+    if __name__ == '__main__':
+        scene = DoubleParticle()
+        scene.render()
+
+        open_media_file(scene.renderer.file_writer.movie_file_path)
