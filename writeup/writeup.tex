@@ -1,0 +1,100 @@
+\documentclass[12pt]{article}
+\input{preamble.tex}
+
+\title{Phys 111 Computational Project}
+\author{Aidan Gallade, Jonathan Holcombe}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\section{Equations of Motion}
+\subsection{Generalized Coordinates}
+Since our system consists of two particles in three dimensions, this system has a maximum of six degrees of freedom. If we made certain assumptions about the mass or charge of the particle (such as the particles having equal charge-mass ratios), we might be able to reduce the number of degrees of freedom, but since we are not making any of these assumption, we are left with the initial six degrees of freedom, with generalized coordinates given by:
+\[
+(x_{1},y_{1},z_{1})\quad  (x_{2},y_{2},z_{2}).
+\]
+
+\subsection{Lagrangian(s)}
+The Lagrangian of a single point charge $q$ in an electric and magnetic field is given by
+\begin{align}
+    \mathscr{L}(\mathbf{r},t) = \frac{1}{2}m \dot{\mathbf{r}}^{2} - q\, \phi(\mathbf{r},t) + q \,\dot{\mathbf{r}} \cdot \mathbf{A}(\mathbf{r},t) \label{eq:L_gen}
+\end{align}
+where $\phi(\mathbf{r},t)$ is the scalar potential of the electric field and $\mathbf{A}(\mathbf{r},t)$ is the vector potential of the magnetic field. Our system has a constant magnetic field of strength $B_{0}$ in the $\hat{z}$ direction, which has a vector potential of 
+\begin{align}
+    \mathbf{A}(\mathbf{r},t) = \mathbf{A} = -B_{0}y\;\hat{x}.
+\end{align}
+Since we have only two charged particles, the only electric field felt by one particle is the electric field of other particle, so the electric scalar potential of each particle is given by
+\begin{align}
+    \phi_{i}(\mathbf{r},t) = \frac{1}{4\pi\epsilon_{0}} \frac{q_{j}}{|\mathbf{r}_{i} - \mathbf{r}_{j}|} = \frac{1}{4\pi\epsilon_{0}} \frac{q_{j}}{d}
+\end{align}
+where we have defined $d = |\mathbf{r}_{i} - \mathbf{r}_{j}|$.
+
+Substituting these potentials and our generalized coordinates into \eref{L_gen}, we get the Lagrangians of our two particles:
+\begin{subequations}
+    \label{eq:L}
+    \begin{align}
+    \mathscr{L}_{1}(x_{1},y_{1},z_{1}) = \frac{1}{2}m_{1} (\dot{x}_{1}^{2} + \dot{y}_{1}^{2} + \dot{z}_{1}^{2}) - \frac{1}{4\pi\epsilon_{0}} \frac{q_{1}q_{2}}{d} - q_{1}B_{0}y_{1}\dot{x}_{1}, \label{eq:L1} \\ 
+    \mathscr{L}_{2}(x_{2},y_{2},z_{2}) = \frac{1}{2}m_{2} \dot(\dot{x}_{2}^{2} + \dot{y}_{2}^{2} + \dot{z}_{2}^{2}) - \frac{1}{4\pi\epsilon_{0}} \frac{q_{2}q_{1}}{d} - q_{2}B_{0}y_{2}\dot{x}_{2}, \label{eq:L2}
+\end{align}
+\end{subequations}
+where $d$ is given by $\sqrt{(x_{2}-x_{1})^{2} +(y_{2}-y_{1})^{2} + (z_{2}-z_{1})^{2}  }$.
+
+\subsection{Euler-Lagrange Equations}
+Taking the Euler-Lagrange equations of these two Lagrangians, we get the following six differential equations:
+\begin{subequations}
+    \label{eq:ele1}
+    \begin{align}
+    \ele[1]{x}\implies&\ddot{x}_{1}=\frac{q_{1}B_{0}}{m_{1}}\dot{y}_{1}+\frac{q_{1}q_{2}}{4\pi \varepsilon_{0}m_{1}}\frac{x_{2}-x_{1}}{d^{3} }  \label{eq:elex1}   \\
+    \ele[1]{y}\implies&\ddot{y}_{1}=-\frac{q_{1}B_{0}}{m_{1}}\dot{x}_{1} +\frac{q_{1}q_{2}}{4\pi \varepsilon_{0}m_{1}}\frac{y_{2}-y_{1}}{d^{3} }   \label{eq:eley1}       \\
+    \ele[1]{z}\implies&\ddot{z}_{1} = \frac{q_{1}q_{2}}{4\pi \varepsilon_{0}m_{1}}\frac{z_{2}-z_{1}}{d^{3} } \label{eq:elez1} 
+\end{align}
+\end{subequations}
+\begin{subequations}
+    \label{eq:ele2}
+    \begin{align}
+    \ele[2]{x}\implies&\ddot{x}_{2}=\frac{q_{2}B_{0}}{m_{2}}\dot{y}_{2}-\frac{q_{1}q_{2}}{4\pi \varepsilon_{0}m_{2}}\frac{x_{2}-x_{1}}{d^{3} }   \label{eq:elex2}  \\
+    \ele[2]{y}\implies&\ddot{y}_{2}=-\frac{q_{2}B_{0}}{m_{2}}\dot{x}_{2} -\frac{q_{1}q_{2}}{4\pi \varepsilon_{0}m_{2}}\frac{y_{2}-y_{1}}{d^{3} }    \label{eq:eley2}      \\
+    \ele[2]{z}\implies&\ddot{z}_{2} = -\frac{q_{1}q_{2}}{4\pi \varepsilon_{0}m_{2}}\frac{z_{2}-z_{1}}{d^{3} }\label{eq:elez2}
+\end{align}
+\end{subequations}
+
+
+\subsection{Non-dimensionalization}
+To non-dimensionalize our equations of motion, we can combine the constants we have in our equations (e.g., $q,m,\varepsilon_{0},B_{0}$) to construct non-dimensionalized lengths and time:
+\[
+\left[ \left( \frac{B_{0}^2\varepsilon_{0}}{m} \right)^{1/3}   \right]  = \mathrm{m}^{-1} \qquad \left[ \frac{qB_{0}}{m} \right] = \mathrm{s}^{-1}. 
+\]
+Using these to write our generalized coordinates and their derivatives in terms of dimensionless variables, we get
+\[
+t = \tilde{t}\frac{m}{qB_{0}}, \qquad l = \tilde{l}\left(\frac{m}{B_{0}^2\varepsilon_{0}} \right)^{1/3}\hspace{-12pt},
+\]
+\[
+\frac{dl }{dt }= \left( \frac{qB_{0}}{m} \right)\left( \frac{m}{B_{0}^2\varepsilon_{0}}   \right) ^{1/3}\frac{d^{2}\tilde{l} }{d\tilde{t}^{2} }, \qquad \frac{dl^{2} }{dt^{2} }= \left( \frac{qB_{0}}{m} \right)^{2}\left( \frac{m}{B_{0}^2\varepsilon_{0}}   \right) ^{1/3}\frac{d^{2}\tilde{l} }{d\tilde{t}^{2} }
+\]
+where the remaining derivatives all have the same non-dimensionalization constants. 
+
+For simplicity, we pick $q_{1}$ and $m_{1}$ to replace the $q$ and $m$ in these constants (picking $q_{2}$ and $m_{2}$ would be equally valid, but we need to be consistent). Substituting these non-dimensional variables into our equations of motion in \eref{ele1} and \eref{ele2}, we arrive at 
+\begin{subequations}
+    \begin{align}
+    &  \ddot{\tilde{x}}_{1} = \dot{\tilde{y}}  + \frac{1}{4\pi} \frac{q_{2} }{ q_{1}} \frac{\tilde{x}_{1}-\tilde{x}_{2}}{\tilde{d}^{3} }     \\
+    &  \ddot{\tilde{y}}_{1} = -\dot{\tilde{x}}  + \frac{1}{4\pi}\frac{q_{2} }{q_{1}} \frac{\tilde{y}_{1}-\tilde{y}_{2}}{\tilde{d}^{3} }          \\
+    &  \ddot{\tilde{z}}_{1} = \frac{1}{4\pi}\frac{q_{2} }{q_{1}} \frac{\tilde{z}_{1}-\tilde{z}_{2}}{\tilde{d}^{3} }   
+\end{align}
+\end{subequations}
+\begin{subequations}
+    \begin{align}
+    &  \ddot{\tilde{x}}_{2}=\frac{q_{2}m_{1}}{q_{1}m_{2}}\dot{\tilde{y}}_{2}+ \frac{1}{4\pi}\frac{q_{2}m_{1}}{ q_{1}m_{2}}\frac{\tilde{x}_{1}-\tilde{x}_{2}}{\tilde{d}^{3} }    \\
+    &  \ddot{\tilde{y}}_{2}=-\frac{q_{2}m_{1}}{q_{1}m_{2}}\dot{\tilde{x}}_{2}+ \frac{1}{4\pi}\frac{q_{2}m_{1}}{ q_{1}m_{2}}\frac{\tilde{y}_{1}-\tilde{y }_{2}}{\tilde{d}^{3} }          \\
+    &  \ddot{\tilde{z}}_{2} = \frac{1}{4\pi}\frac{q_{2}m_{1}}{ q_{1}m_{2}}\frac{\tilde{z}_{1}-\tilde{z}_{2}}{\tilde{d}^{3} } 
+\end{align}
+\end{subequations}
+These $q$ and $m$ factor on our equations for the second particle just specify its behavior differs first particle's in terms of their charge and mass ratios.
+
+\section{Dynamics}
+
+\section{Conclusion}
+
+
+\end{document}

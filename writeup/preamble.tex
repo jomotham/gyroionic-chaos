@@ -1,0 +1,81 @@
+% Math Packages
+\usepackage{amssymb, amsmath, amsfonts, amsthm, mathtools, graphicx, tcolorbox, cancel, mathrsfs}
+
+% Formatting Packages
+\usepackage{cite, pdfpages, tikz, pgffor, float, pgfplots, import, xcolor, transparent, siunitx, caption, enumitem, titlesec, multicol, pifont, verbatim, fancyvrb, calc, xspace}
+
+\usepackage{wrapfig,paralist,rotating,subfig}
+\usepackage[textwidth=6in,textheight=8in]{geometry}
+
+% Please use vector graphics in .pdf format where possible
+% This is much preferable to large bitmap files
+\DeclareGraphicsExtensions{{.pdf},{.jpg},{.png}}
+
+\usepackage[english]{babel}
+% \usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[absolute]{textpos}
+
+
+\usetikzlibrary{shapes.geometric}
+\pgfplotsset{compat=1.18}
+\pdfsuppresswarningpagegroup=1
+\tikzset{every picture/.style={line width=0.75pt}}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\newcommand{\eref}[2][]{%
+	\ifthenelse{\equal{#1}{}}%
+	{Eq.~(\ref{eq:#2})}%
+	{Equation~(\ref{eq:#2})}\xspace}
+
+% To refer to a figure, use \fref{<label>}, where <label> is the
+% part that follows the 'fig:' in the label of the figure.
+\newcommand{\fref}[2][]{%
+  \ifthenelse{\equal{#1}{}}%
+	{Fig.~\ref{fig:#2}}%
+	{Figure~\ref{fig:#2}}}
+
+% How to type vectors. If you don't like this style, you can just change
+% the definition of \VEC!!
+\newcommand{\VEC}[1]{\ensuremath{\boldsymbol{#1}}\xspace}
+
+% unit vectors
+\newcommand{\ux}{\ensuremath{\mathbf{\hat{x}}}\xspace}
+\newcommand{\uy}{\ensuremath{\mathbf{\hat{x}}}\xspace}
+\newcommand{\uz}{\ensuremath{\mathbf{\hat{x}}}\xspace}
+
+% theta dot and double dot
+\newcommand{\thd}{\ensuremath{\dot{\theta}}\xspace}
+\newcommand{\thdd}{\ensuremath{\ddot{\theta}}\xspace}
+
+% Derivatives. Some publications require the d in a differential
+% to be set in roman. I've never liked that, but I have trained myself
+% always to use these two macros, so if I need to switch, it is
+% painless.
+\newcommand{\DD}{\ensuremath{d}}		% differential d without leading space
+\newcommand{\dd}{\ensuremath{\,\DD}}	% differential d
+
+% A normal (total) derivative. If you supply an optional argument n,
+% then you get the nth derivative: e.g., \deriv[2]{x}{t}
+\newcommand{\deriv}[3][]{\ensuremath{%
+	\ifthenelse{\equal{#1}{}}{\frac{\DD #2}{\DD #3}}
+	{\frac{\DD^{#1} #2}{\DD #3^{#1}}}}}
+
+% partial derivative
+\newcommand{\pd}[3][]{\ensuremath{%
+	\ifthenelse{\equal{#1}{}}{\frac{\partial #2}{\partial #3}}
+	{\partial #2 / \partial #3}}}
+
+% variational derivative
+\newcommand{\varder}[2][]{\ensuremath{\deriv{}{t} \left( \pd{L}{\dot{#2}%
+      \ifthenelse{\equal{}{#1}}{}{_{#1}}} \right)} - \pd{L}{#2%
+      \ifthenelse{\equal{}{#1}}{}{_{#1}}} }
+
+% variational derivative
+\newcommand{\ele}[2][]{\ensuremath{\deriv{}{t} \left( \pd{\mathscr{L}}{\dot{#2}%
+      \ifthenelse{\equal{}{#1}}{}{_{#1}}} \right)} = \pd{\mathscr{L}}{#2%
+      \ifthenelse{\equal{}{#1}}{}{_{#1}}} }
+
+
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
