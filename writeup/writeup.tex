@@ -8,6 +8,17 @@
 \maketitle
 
 \section{Introduction}
+Our chosen system consists of two charged particles, with charges $q_{1}$ and $q_{2}$  and masses $m_{1}$ and $m_{2}$ respectively, placed in a constant magnetic field, for simplicity's sake chosen to be $\mathbf{B} = B_{0}\, \hat{z}$.
+
+In a system with just a single charged particle and a constant magnetic field along $\hat{z}$, the particle undergoes gyration in the $x$-$y$ plane about an axis parallel to $\hat{z}$ and approaches some constant speed in the $\hat{z}$ direction, as depicted in \fref{single-gyration}. If we take $|q|=|m| = 1$, then this terminal $z$-velocity is determined by $B_{0}$, and the radius of gyration is determined by both $B_{0}$ and the particle's initial velocity in the $x$-$y$ plane.
+
+\begin{figure}[H]
+    %\includegrahpics[width=0.8\linewidth]{filename.png}
+    \caption{A single charged particle gyrating in the constant magnetic field $\mathbf{B} = B_{0}\, \hat{z}$.}
+    \label{fig:single-gyration}
+\end{figure}
+
+By introducing a second particle, there will now be a Coulombic interaction between the two particles. Due to the Coulomb potential being proportional to $1/r$, we hope to see strong sensitivity to initial conditions and chaotic behavior as a result of introducing this second particle.
 
 \section{Equations of Motion}
 \subsection{Generalized Coordinates}
@@ -91,6 +102,9 @@ For simplicity, we pick $q_{1}$ and $m_{1}$ to replace the $q$ and $m$ in these 
 \end{align}
 \end{subequations}
 These $q$ and $m$ factor on our equations for the second particle just specify its behavior differs first particle's in terms of their charge and mass ratios.
+
+
+TODO: look into getting the ratio terms in both sets of DEs. Currently, with our non-dimensionalizing, we define the length and time scale based on particle 1 to have a length/time of "1", and define particle 2 relative to that. Instead, could we define the midpoint of their scales to be one, so that reciprocal coeffs get us the correct scales?
 
 \section{Dynamics}
 
