@@ -3,12 +3,6 @@ from numpy.typing import NDArray
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 
-
-# Avec = -B_0y xhat
-# Bvec = B_0 zhat
-
-CONSTANT = 1
-
 # -----------------------------------------------
 # All in terms on non-dimensionalized quantities
 # -----------------------------------------------
